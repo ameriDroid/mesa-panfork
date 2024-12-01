@@ -16,10 +16,14 @@ jobs:
 
       - name: Build packages
         run: |
+          export $(dpkg-architecture -aarm64)
+          export CROSS_COMPILE=aarch64-linux-gnu-
+          export CC=aarch64-linux-gnu-gcc
+          export LANG=C
           sudo apt-get update
           sudo apt-get build-dep --no-install-recommends -y .
-          sudo apt-get install --no-install-recommends -y git-buildpackage debhelper devscripts
-          debuild --no-lintian -us -uc
+          sudo apt-get install --no-install-recommends -y git-buildpackage debhelper devscripts gcc-12 gcc-12-aarch64-linux-gnu
+          debuild --no-lintian -us -uc -b -aarm64 -Pcross -d
 
       - name: Workaround actions
         run: |
