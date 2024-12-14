@@ -1,6 +1,7 @@
 name: Build and Upload test package
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'debian/changelog'
@@ -22,7 +23,7 @@ jobs:
           export LANG=C
           sudo apt-get update
           sudo apt-get build-dep --no-install-recommends -y .
-          sudo apt-get install --no-install-recommends -y git-buildpackage debhelper devscripts gcc-12 gcc-12-aarch64-linux-gnu
+          sudo apt-get install --no-install-recommends -y git-buildpackage debhelper devscripts gcc-aarch64-linux-gnu
           debuild --no-lintian -us -uc -b -aarm64 -Pcross -d
 
       - name: Workaround actions
