@@ -35,7 +35,7 @@ jobs:
 
   release:
     needs: build
-    runs-on: ubuntu-24.04
+    runs-on: [ self-hosted, ubuntu-24.04, pkg ]
     if: ${{ github.event_name != 'pull_request' && github.ref_name == 'main' }}
     steps:
       - name: Checkout
@@ -83,6 +83,7 @@ jobs:
 
       - name: Push updated repository to main branch
         run: |
+          ls
           cd ./repo
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
