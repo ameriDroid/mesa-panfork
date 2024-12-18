@@ -10,22 +10,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: [ self-hosted, ubuntu-24.04, pkg ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Build packages
         run: |
-          export $(dpkg-architecture -aarm64)
-          export CROSS_COMPILE=aarch64-linux-gnu-
-          export CC=aarch64-linux-gnu-gcc
-          export LANG=C
-          sudo dpkg --add-architecture arm64
           sudo apt-get update
-          sudo apt-get build-dep --no-install-recommends -y -aarm64 .
-          sudo apt-get install --no-install-recommends -y git-buildpackage debhelper devscripts gcc-aarch64-linux-gnu g++-aarch64-linux-gnu crossbuild-essential-arm64 binutils-aarch64-linux-gnu
-          debuild --no-lintian -us -uc -b -aarm64 -Pcross -d
+          sudo apt-get build-dep --no-install-recommends -y .
+          sudo apt-get install --no-install-recommends -y git-buildpackage debhelper devscripts
+          debuild --no-lintian -us -uc
 
       - name: Workaround actions
         run: |
