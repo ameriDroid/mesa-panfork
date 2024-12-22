@@ -71,8 +71,8 @@ jobs:
 
       - name: Upload packages to APT repository
         run: |
-          cd ./repo
-          for package in ../*.deb; do
+          cd ./repo/stable/
+          for package in ../../*.deb; do
             for codename in bookworm trixie sid oracular; do
               reprepro --ignore=wrongdistribution includedeb $codename $package
             done
