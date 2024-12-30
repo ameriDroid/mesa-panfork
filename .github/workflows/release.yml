@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: [ self-hosted, ubuntu-24.04, pkg ]
+    runs-on: [ self-hosted, debian-12, pkg ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
